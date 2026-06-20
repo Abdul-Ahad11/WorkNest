@@ -8,10 +8,10 @@ Built with a modern tech stack and following best practices for security (ASP.NE
 
 ## Tech Stack
 
-- **Framework:** ASP.NET Core MVC (.NET 8)
+- **Framework:** ASP.NET Core MVC (.NET 10)
 - **Language:** C# 12
 - **Database:** SQL Server (LocalDB for development)
-- **ORM:** Entity Framework Core 8
+- **ORM:** Entity Framework Core 10
 - **Authentication:** ASP.NET Core Identity with Roles (Admin, Client, Freelancer)
 - **Frontend:** Bootstrap 5, jQuery, Chart.js
 - **AJAX:** jQuery AJAX for real-time updates
@@ -20,7 +20,7 @@ Built with a modern tech stack and following best practices for security (ASP.NE
 ## Prerequisites
 
 - [Visual Studio 2022](https://visualstudio.microsoft.com/) (Community Edition or higher)
-- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
 - [SQL Server Express LocalDB](https://learn.microsoft.com/en-us/sql/database-engine/configure-windows/sql-server-express-localdb) (comes with Visual Studio)
 - [Node.js](https://nodejs.org/) (optional, for client-side package management)
 
@@ -35,7 +35,7 @@ cd WorkNest
 
 ### 2. Open in Visual Studio
 
-Open `WorkNest.slnx` in Visual Studio 2022.
+Open `WorkNest.slnx` in Visual Studio 2026.
 
 ### 3. Update Connection String
 
