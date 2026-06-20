@@ -1,0 +1,268 @@
+@model FreelanceMarketplace.ViewModels.Admin.AdminDashboardViewModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="container mt-4">
+    <h2 class="fw-bold mb-4"><i class="bi bi-speedometer2 me-2"></i>Admin Dashboard</h2>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm border-start border-primary border-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="fw-bold text-primary mb-0">@Model.TotalUsers</h5>
+                            <p class="text-muted mb-0">Total Users</p>
+                        </div>
+                        <i class="bi bi-people fs-2 text-primary opacity-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm border-start border-success border-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="fw-bold text-success mb-0">@Model.TotalProjects</h5>
+                            <p class="text-muted mb-0">Total Projects</p>
+                        </div>
+                        <i class="bi bi-briefcase fs-2 text-success opacity-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm border-start border-warning border-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="fw-bold text-warning mb-0">@Model.TotalBids</h5>
+                            <p class="text-muted mb-0">Total Bids</p>
+                        </div>
+                        <i class="bi bi-chat-dots fs-2 text-warning opacity-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm border-start border-info border-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="fw-bold text-info mb-0">@Model.CompletedProjects</h5>
+                            <p class="text-muted mb-0">Completed</p>
+                        </div>
+                        <i class="bi bi-check-circle fs-2 text-info opacity-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="fw-bold text-primary mb-0">@Model.TotalClients</h5>
+                    <p class="text-muted mb-0">Clients</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="fw-bold text-success mb-0">@Model.TotalFreelancers</h5>
+                    <p class="text-muted mb-0">Freelancers</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="fw-bold text-warning mb-0">@Model.OpenProjects</h5>
+                    <p class="text-muted mb-0">Open Projects</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="fw-bold text-info mb-0">@Model.InProgressProjects</h5>
+                    <p class="text-muted mb-0">In Progress</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white">
+                    <h5 class="fw-bold mb-0"><i class="bi bi-bar-chart me-2"></i>Projects by Category</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="projectsByCategoryChart" height="250"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white">
+                    <h5 class="fw-bold mb-0"><i class="bi bi-pie-chart me-2"></i>Project Status</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="projectStatusChart" height="250"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white">
+                    <h5 class="fw-bold mb-0"><i class="bi bi-graph-up me-2"></i>Registrations (Last 30 Days)</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="registrationsTrendChart" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <h5 class="fw-bold mb-0">Recent Projects</h5>
+                    <a asp-action="Projects" class="btn btn-sm btn-outline-primary">View All</a>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Title</th>
+                                <th>Client</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var p in Model.RecentProjects)
+                            {
+                                <tr>
+                                    <td>@p.Title</td>
+                                    <td>@p.Client?.FullName</td>
+                                    <td>@p.Status</td>
+                                    <td><small>@p.CreatedAt.ToString("MMM dd")</small></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <h5 class="fw-bold mb-0">Recent Users</h5>
+                    <a asp-action="Users" class="btn btn-sm btn-outline-primary">View All</a>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Joined</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var u in Model.RecentUsers)
+                            {
+                                <tr>
+                                    <td>@u.FullName</td>
+                                    <td>@u.Email</td>
+                                    <td><small>@u.CreatedAt.ToString("MMM dd, yyyy")</small></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var categoryData = @Html.Raw(Json.Serialize(Model.ProjectsPerCategory));
+            var statusData = {
+                labels: ['Open', 'In Progress', 'Completed', 'Cancelled'],
+                values: [@Model.OpenProjects, @Model.InProgressProjects, @Model.CompletedProjects, @Model.CancelledProjects]
+            };
+            var trendData = @Html.Raw(Json.Serialize(Model.RegistrationsLast30Days));
+
+            if (Object.keys(categoryData).length > 0) {
+                new Chart(document.getElementById('projectsByCategoryChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(categoryData),
+                        datasets: [{
+                            label: 'Projects',
+                            data: Object.values(categoryData),
+                            backgroundColor: ['#0d6efd', '#198754', '#ffc107', '#dc3545', '#0dcaf0', '#6610f2', '#fd7e14', '#20c997'],
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: { legend: { display: false } }
+                    }
+                });
+            }
+
+            new Chart(document.getElementById('projectStatusChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: statusData.labels,
+                    datasets: [{
+                        data: statusData.values,
+                        backgroundColor: ['#198754', '#ffc107', '#0d6efd', '#dc3545']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+
+            if (Object.keys(trendData).length > 0) {
+                new Chart(document.getElementById('registrationsTrendChart'), {
+                    type: 'line',
+                    data: {
+                        labels: Object.keys(trendData),
+                        datasets: [{
+                            label: 'New Users',
+                            data: Object.values(trendData),
+                            borderColor: '#0d6efd',
+                            backgroundColor: 'rgba(13, 110, 253, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: { legend: { display: false } }
+                    }
+                });
+            }
+        });
+    </script>
+}

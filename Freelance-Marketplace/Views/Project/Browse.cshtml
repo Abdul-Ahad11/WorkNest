@@ -1,0 +1,107 @@
+@model FreelanceMarketplace.ViewModels.Project.ProjectBrowseViewModel
+@{
+    ViewData["Title"] = "Browse Projects";
+}
+
+<div class="container mt-4">
+    <h2 class="fw-bold mb-4"><i class="bi bi-search me-2"></i>Browse Projects</h2>
+
+    <div class="card shadow-sm border-0 mb-4 sticky-top" style="top: 20px; z-index: 100;">
+        <div class="card-body">
+            <div class="row g-2 align-items-end">
+                <div class="col-md-3">
+                    <label class="form-label fw-bold small">Search</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-search"></i></span>
+                        <input type="text" id="searchInput" class="form-control" placeholder="Search projects..." value="@Model.SearchKeyword" />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label fw-bold small">Category</label>
+                    <select id="categoryFilter" class="form-select">
+                        <option value="">All Categories</option>
+                        @if (ViewBag.Categories != null)
+                        {
+                            foreach (var cat in (IEnumerable<FreelanceMarketplace.Models.Category>)ViewBag.Categories)
+                            {
+                                <option value="@cat.Id" selected="@(Model.SelectedCategoryId == cat.Id)">@cat.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label fw-bold small">Min Budget</label>
+                    <input type="number" id="minBudget" class="form-control" placeholder="$0" value="@Model.MinBudget" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label fw-bold small">Max Budget</label>
+                    <input type="number" id="maxBudget" class="form-control" placeholder="$99999" value="@Model.MaxBudget" />
+                </div>
+                <div class="col-md-1">
+                    <label class="form-label fw-bold small">Sort</label>
+                    <select id="sortBy" class="form-select">
+                        <option value="newest" selected="@(Model.SortBy == "newest")">Newest</option>
+                        <option value="budget_high" selected="@(Model.SortBy == "budget_high")">Budget: High</option>
+                        <option value="budget_low" selected="@(Model.SortBy == "budget_low")">Budget: Low</option>
+                        <option value="deadline" selected="@(Model.SortBy == "deadline")">Deadline</option>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <label class="form-label fw-bold small">&nbsp;</label>
+                    <button id="searchBtn" class="btn btn-primary w-100"><i class="bi bi-search"></i></button>
+                </div>
+                <div class="col-md-1">
+                    <label class="form-label fw-bold small">&nbsp;</label>
+                    <button id="clearBtn" class="btn btn-outline-secondary w-100">Clear</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p id="resultsCount" class="text-muted small mb-3">Showing @Model.Projects.Count of @Model.TotalCount projects</p>
+
+    <div id="loadingSpinner" class="text-center py-5" style="display:none;">
+        <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="text-muted mt-2">Loading projects...</p>
+    </div>
+
+    <div id="projectsGrid" class="row g-4">
+        @if (Model.Projects.Any())
+        {
+            @foreach (var project in Model.Projects)
+            {
+                <partial name="_ProjectCard" model="project" />
+            }
+        }
+    </div>
+
+    <div id="emptyState" class="text-center py-5" style="display:@(Model.Projects.Any() ? "none" : "block")">
+        <i class="bi bi-inbox text-muted" style="font-size: 4rem;"></i>
+        <h4 class="fw-bold mt-3 text-muted">No projects found</h4>
+        <p class="text-muted">Try adjusting your search or filter criteria.</p>
+    </div>
+
+    @if (Model.TotalPages > 1)
+    {
+        <nav id="paginationControls" class="mt-4">
+            <ul class="pagination justify-content-center">
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                        <a class="page-link page-btn" data-page="@i" href="#">@i</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    }
+    else
+    {
+        <div id="paginationControls"></div>
+    }
+</div>
+
+@section Scripts {
+    <script src="~/js/project-browse.js"></script>
+}

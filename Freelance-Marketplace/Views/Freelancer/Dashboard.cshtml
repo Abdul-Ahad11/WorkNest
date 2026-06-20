@@ -1,0 +1,24 @@
+﻿@model IEnumerable<FreelanceMarketplace.Models.Bid>
+
+<div class="container mt-4">
+    <h2 class="fw-bold">My Bids</h2>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Project</th>
+                <th>Bid Amount</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var bid in Model)
+            {
+                <tr>
+                    <td>@bid.Project.Title</td>
+                    <td>$@bid.Amount</td>
+                    <td>@bid.Project.Status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
